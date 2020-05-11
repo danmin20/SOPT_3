@@ -89,14 +89,14 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-//    // 로그인 유지
-//    override fun onStart() {
-//        super.onStart()
-//        if (isLoggedIn.isLoggedIn == "isLoggedIn") {
-//            startActivity(Intent(this, MainActivity::class.java))
-//            finish()
-//        }
-//    }
+    // 로그인 유지
+    override fun onStart() {
+        super.onStart()
+        if (isLoggedIn.isLoggedIn == "isLoggedIn") {
+            startActivity(Intent(this, MainActivity::class.java))
+            finish()
+        }
+    }
 }
 
 class MySharedPreferences(context: Context) {

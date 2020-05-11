@@ -3,5 +3,6 @@
     <color name="colorLightGray">#f1f1f1</color>
     <color name="colorBlue">#1B3180</color>
     <color name="colorWhite">#FFFFFF</color>
-
+    <color name="colorPrimary">#074A92</color>
+    <color name="white">#ffffff</color>
 </resources>
