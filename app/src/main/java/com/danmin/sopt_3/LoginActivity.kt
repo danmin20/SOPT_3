@@ -28,19 +28,19 @@ class LoginActivity : AppCompatActivity() {
         setContentView(R.layout.activity_login)
 
         login_btn.setOnClickListener {
-            if (login_email.text.isNullOrBlank() || login_pw.text.isNullOrBlank()) {
+            if (login_id.text.isNullOrBlank() || login_pw.text.isNullOrBlank()) {
                 Toast.makeText(this, "이메일과 비밀번호를 입력하세요", Toast.LENGTH_SHORT).show()
             } else {
                 // login request
                 requestToServer.service.requestLogin(
                     RequestLogin(
-                        id = login_email.text.toString(),
+                        id = login_id.text.toString(),
                         password = login_pw.text.toString()
                     )
                 ).enqueue(object : Callback<ResponseLogin> {
                     override fun onFailure(call: Call<ResponseLogin>, t: Throwable) {
                         // fail
-                        Log.e("오류",t.toString())
+                        Log.e("error",t.toString())
                         Toast.makeText(this@LoginActivity, "로그인 실패", Toast.LENGTH_SHORT).show()
                     }
 
@@ -48,7 +48,6 @@ class LoginActivity : AppCompatActivity() {
                         call: Call<ResponseLogin>,
                         response: Response<ResponseLogin>
                     ) {
-                        // success. status code 200~300
                         if (response.isSuccessful) {
                             if (response.body()!!.success) {
                                 Toast.makeText(this@LoginActivity, "로그인 성공", Toast.LENGTH_SHORT)
@@ -81,8 +80,8 @@ class LoginActivity : AppCompatActivity() {
         if (resultCode == Activity.RESULT_OK) {
             when (requestCode) {
                 100 -> {
-                    val savedEmail = data?.getStringExtra("email").toString()
-                    login_email.setText(savedEmail)
+                    val savedId = data?.getStringExtra("email").toString()
+                    login_id.setText(savedId)
                     val savedPw = data?.getStringExtra("password").toString()
                     login_pw.setText(savedPw)
                 }
