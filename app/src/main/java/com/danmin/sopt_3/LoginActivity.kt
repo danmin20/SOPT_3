@@ -10,7 +10,7 @@ import android.util.Log
 import android.widget.Toast
 import com.danmin.sopt_3.data.RequestLogin
 import com.danmin.sopt_3.data.ResponseLogin
-import com.danmin.sopt_3.network.RequestToServer
+import com.danmin.sopt_3.network.RequestLoginToServer
 import kotlinx.android.synthetic.main.activity_login.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -18,7 +18,7 @@ import retrofit2.Response
 
 class LoginActivity : AppCompatActivity() {
 
-    val requestToServer = RequestToServer
+    val requestToServer = RequestLoginToServer
 
     private lateinit var isLoggedIn: MySharedPreferences
 
