@@ -6,10 +6,19 @@ import android.content.Intent
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
+import com.danmin.sopt_3.data.RequestLogin
+import com.danmin.sopt_3.data.ResponseLogin
+import com.danmin.sopt_3.network.RequestToServer
 import kotlinx.android.synthetic.main.activity_login.*
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class LoginActivity : AppCompatActivity() {
+
+    val requestToServer = RequestToServer
 
     private lateinit var isLoggedIn: MySharedPreferences
 
@@ -22,11 +31,43 @@ class LoginActivity : AppCompatActivity() {
             if (login_email.text.isNullOrBlank() || login_pw.text.isNullOrBlank()) {
                 Toast.makeText(this, "이메일과 비밀번호를 입력하세요", Toast.LENGTH_SHORT).show()
             } else {
-                val intent = Intent(this, MainActivity::class.java)
-                startActivity(intent)
+                // login request
+                requestToServer.service.requestLogin(
+                    RequestLogin(
+                        id = login_email.text.toString(),
+                        password = login_pw.text.toString()
+                    )
+                ).enqueue(object : Callback<ResponseLogin> {
+                    override fun onFailure(call: Call<ResponseLogin>, t: Throwable) {
+                        // fail
+                        Log.e("오류",t.toString())
+                        Toast.makeText(this@LoginActivity, "로그인 실패", Toast.LENGTH_SHORT).show()
+                    }
 
-                isLoggedIn.isLoggedIn = "isLoggedIn"
-                finish()
+                    override fun onResponse(
+                        call: Call<ResponseLogin>,
+                        response: Response<ResponseLogin>
+                    ) {
+                        // success. status code 200~300
+                        if (response.isSuccessful) {
+                            if (response.body()!!.success) {
+                                Toast.makeText(this@LoginActivity, "로그인 성공", Toast.LENGTH_SHORT)
+                                    .show()
+                                val intent = Intent(this@LoginActivity, MainActivity::class.java)
+                                startActivity(intent)
+
+                                isLoggedIn.isLoggedIn = "isLoggedIn"
+                                finish()
+                            } else {
+                                Toast.makeText(
+                                    this@LoginActivity,
+                                    "아이디/비밀번호를 확인하세요",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }
+                        }
+                    }
+                })
             }
         }
         gotoJoin.setOnClickListener {
