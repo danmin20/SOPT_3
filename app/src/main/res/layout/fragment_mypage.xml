@@ -5,10 +5,16 @@
     android:layout_height="match_parent"
     tools:context=".fragment.MypageFragment">
 
-    <!-- TODO: Update blank fragment layout -->
+    <ImageView
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:layout_gravity="center"
+        android:src="@drawable/photo" />
+
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
-
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:padding="60dp"
+        android:text="Lee Jeongmin\n1999.11.08\nSOPT 26th android part" />
 </FrameLayout>
