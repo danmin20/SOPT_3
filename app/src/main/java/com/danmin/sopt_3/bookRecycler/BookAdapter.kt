@@ -5,10 +5,11 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.danmin.sopt_3.R
+import com.danmin.sopt_3.data.ResponseBook
 
 class BookAdapter(private val context: Context) : RecyclerView.Adapter<BookViewHolder>() {
 
-    var datas = mutableListOf<BookData>()
+    var datas = mutableListOf<ResponseBook>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BookViewHolder {
         val view = LayoutInflater.from(context).inflate(R.layout.item_book, parent, false)

@@ -9,8 +9,17 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_book"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="664dp"
+        android:layout_gravity="bottom"
         android:clipToPadding="false"
-        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         tools:listitem="@layout/item_book" />
+
+    <EditText
+        android:id="@+id/search_book"
+        android:layout_width="match_parent"
+        android:layout_height="67dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:hint="책 검색"/>
 </FrameLayout>

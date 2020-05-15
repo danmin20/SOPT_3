@@ -6,13 +6,18 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.danmin.sopt_3.R
+import com.danmin.sopt_3.data.ResponseBook
 
 class BookViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-    val book_title = itemView.findViewById<TextView>(R.id.book_title)
-    val book_img = itemView.findViewById<ImageView>(R.id.book_img)
+    val title = itemView.findViewById<TextView>(R.id.title)
+    val thumbnail = itemView.findViewById<ImageView>(R.id.thumbnail)
+    val contents = itemView.findViewById<TextView>(R.id.contents)
+    val authors = itemView.findViewById<TextView>(R.id.authors)
 
-    fun bind(bookData: BookData) {
-        book_title.text = bookData.title
-        Glide.with(itemView).load(bookData.book_img).into(book_img)
+    fun bind(responseBook: ResponseBook) {
+        title.text = responseBook.title
+        Glide.with(itemView).load(responseBook.thumbnail).into(thumbnail)
+        contents.text = responseBook.contents
+        authors.text = responseBook.authors.toString()
     }
 }
