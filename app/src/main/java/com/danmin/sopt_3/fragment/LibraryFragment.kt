@@ -49,7 +49,8 @@ class LibraryFragment : Fragment() {
             } else {
                 // search request
                 requestToServer.service.requestBook(
-                    title = search_book.text.toString()
+                    title = search_book.text.toString(),
+                    auth = getString(R.string.auth)
                 ).enqueue(object : Callback<ResponseBook> {
                     override fun onFailure(call: Call<ResponseBook>, t: Throwable) {
                         // fail
@@ -62,10 +63,7 @@ class LibraryFragment : Fragment() {
                         response: Response<ResponseBook>
                     ) {
                         if (response.isSuccessful) {
-                            Log.d("res",response.toString())
-                            Log.d("data",response.body().toString())
                             response.body()!!.documents.map {
-                                Log.d("data",it.toString())
                                 datas.apply {
                                     add(
                                         it
