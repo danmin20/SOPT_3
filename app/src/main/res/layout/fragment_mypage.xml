@@ -17,4 +17,16 @@
         android:layout_gravity="bottom"
         android:padding="60dp"
         android:text="Lee Jeongmin\n1999.11.08\nSOPT 26th android part" />
+
+    <Button
+        android:id="@+id/logout_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:layout_marginTop="50dp"
+        android:layout_marginRight="50dp"
+        android:background="@drawable/button_background"
+        android:paddingHorizontal="25dp"
+        android:text="로그아웃"
+        android:textColor="@color/white" />
 </FrameLayout>
