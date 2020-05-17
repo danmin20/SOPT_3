@@ -9,5 +9,5 @@ object RequestBookToServer {
         .addConverterFactory(GsonConverterFactory.create())
         .build()
 
-    var service: RequestBookToServer = retrofit.create(RequestBookToServer::class.java)
+    var service: RequestBookInterface = retrofit.create(RequestBookInterface::class.java)
 }

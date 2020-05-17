@@ -1,19 +1,28 @@
 package com.danmin.sopt_3.fragment
 
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.danmin.sopt_3.R
 import com.danmin.sopt_3.bookRecycler.BookAdapter
 import com.danmin.sopt_3.data.ResponseBook
+import com.danmin.sopt_3.data.ResponseBookData
+import com.danmin.sopt_3.network.RequestBookToServer
 import kotlinx.android.synthetic.main.fragment_library.*
+import kotlinx.android.synthetic.main.item_book.*
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class LibraryFragment : Fragment() {
     lateinit var bookAdapter: BookAdapter
-    val datas = mutableListOf<ResponseBook>()
+    val datas = mutableListOf<ResponseBookData>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -29,52 +38,46 @@ class LibraryFragment : Fragment() {
             adapter = bookAdapter
             layoutManager = LinearLayoutManager(view.context, LinearLayoutManager.VERTICAL, false)
         }
-    }
 
-    join_btn.setOnClickListener
-    {
-        if (join_check_pw.text.toString() != join_pw.text.toString()) {
-            Toast.makeText(this, "비밀번호가 일치하지 않습니다", Toast.LENGTH_SHORT).show()
-        } else {
-            // join request
-            requestToServer.service.requestJoin(
-                RequestJoin(
-                    id = join_email.text.toString(),
-                    name = join_name.text.toString(),
-                    password = join_pw.text.toString(),
-                    email = join_email.text.toString(),
-                    phone = join_phone.text.toString()
-                )
-            ).enqueue(object : Callback<ResponseJoin> {
-                override fun onFailure(call: Call<ResponseJoin>, t: Throwable) {
-                    //fail
-                    Log.e("error", t.toString())
-                    Toast.makeText(this@JoinActivity, "회원가입 실패", Toast.LENGTH_SHORT).show()
-                }
+        val requestToServer = RequestBookToServer
 
-                override fun onResponse(
-                    call: Call<ResponseJoin>,
-                    response: Response<ResponseJoin>
-                ) {
-                    if (response.isSuccessful) {
-                        if (response.body()!!.success) {
-                            Toast.makeText(this@JoinActivity, "회원가입 성공", Toast.LENGTH_SHORT)
-                                .show()
-                            val intent = Intent()
-                            intent.putExtra("email", join_email.text.toString())
-                            intent.putExtra("password", join_pw.text.toString())
-                            setResult(Activity.RESULT_OK, intent)
-                            finish()
-                        } else {
-                            Toast.makeText(
-                                this@JoinActivity,
-                                "모든 정보를 입력하세요",
-                                Toast.LENGTH_SHORT
-                            ).show()
+        val context = this.activity
+
+        search_button.setOnClickListener {
+            if (search_book.text.toString() == "") {
+                Toast.makeText(context, "책 제목을 입력해주세요", Toast.LENGTH_SHORT).show()
+            } else {
+                // search request
+                requestToServer.service.requestBook(
+                    title = search_book.text.toString()
+                ).enqueue(object : Callback<ResponseBook> {
+                    override fun onFailure(call: Call<ResponseBook>, t: Throwable) {
+                        // fail
+                        Log.e("error", t.toString())
+                        Toast.makeText(context, "책 정보 가져오기 실패", Toast.LENGTH_SHORT).show()
+                    }
+
+                    override fun onResponse(
+                        call: Call<ResponseBook>,
+                        response: Response<ResponseBook>
+                    ) {
+                        if (response.isSuccessful) {
+                            Log.d("res",response.toString())
+                            Log.d("data",response.body().toString())
+                            response.body()!!.documents.map {
+                                Log.d("data",it.toString())
+                                datas.apply {
+                                    add(
+                                        it
+                                    )
+                                }
+                                bookAdapter.datas = datas
+                                bookAdapter.notifyDataSetChanged()
+                            }
                         }
                     }
-                }
-            })
+                })
+            }
         }
     }
 }
