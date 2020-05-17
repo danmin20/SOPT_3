@@ -30,7 +30,7 @@ class JoinActivity : AppCompatActivity() {
                 // join request
                 requestToServer.service.requestJoin(
                     RequestJoin(
-                        id = join_email.text.toString(),
+                        id = join_id.text.toString(),
                         name = join_name.text.toString(),
                         password = join_pw.text.toString(),
                         email = join_email.text.toString(),
@@ -48,20 +48,15 @@ class JoinActivity : AppCompatActivity() {
                         response: Response<ResponseJoin>
                     ) {
                         if (response.isSuccessful) {
-                            if (response.body()!!.success) {
-                                Toast.makeText(this@JoinActivity, "회원가입 성공", Toast.LENGTH_SHORT)
+                            val message = response.body()!!.message
+                            Toast.makeText(this@JoinActivity, message, Toast.LENGTH_SHORT)
                                     .show()
+                            if (response.body()!!.success) {
                                 val intent = Intent()
-                                intent.putExtra("email", join_email.text.toString())
+                                intent.putExtra("id", join_id.text.toString())
                                 intent.putExtra("password", join_pw.text.toString())
                                 setResult(Activity.RESULT_OK, intent)
                                 finish()
-                            } else {
-                                Toast.makeText(
-                                    this@JoinActivity,
-                                    "모든 정보를 입력하세요",
-                                    Toast.LENGTH_SHORT
-                                ).show()
                             }
                         }
                     }

@@ -49,20 +49,15 @@ class LoginActivity : AppCompatActivity() {
                         response: Response<ResponseLogin>
                     ) {
                         if (response.isSuccessful) {
-                            if (response.body()!!.success) {
-                                Toast.makeText(this@LoginActivity, "로그인 성공", Toast.LENGTH_SHORT)
+                            val message = response.body()!!.message
+                            Toast.makeText(this@LoginActivity, message, Toast.LENGTH_SHORT)
                                     .show()
+                            if (response.body()!!.success) {
                                 val intent = Intent(this@LoginActivity, MainActivity::class.java)
                                 startActivity(intent)
 
                                 isLoggedIn.isLoggedIn = "isLoggedIn"
                                 finish()
-                            } else {
-                                Toast.makeText(
-                                    this@LoginActivity,
-                                    "아이디/비밀번호를 확인하세요",
-                                    Toast.LENGTH_SHORT
-                                ).show()
                             }
                         }
                     }
@@ -80,7 +75,7 @@ class LoginActivity : AppCompatActivity() {
         if (resultCode == Activity.RESULT_OK) {
             when (requestCode) {
                 100 -> {
-                    val savedId = data?.getStringExtra("email").toString()
+                    val savedId = data?.getStringExtra("id").toString()
                     login_id.setText(savedId)
                     val savedPw = data?.getStringExtra("password").toString()
                     login_pw.setText(savedPw)
