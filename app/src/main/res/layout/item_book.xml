@@ -3,45 +3,50 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:padding="15dp">
 
     <ImageView
         android:id="@+id/thumbnail"
         android:layout_width="100dp"
         android:layout_height="150dp"
         android:scaleType="centerCrop"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
 
-    <TextView
-        android:id="@+id/title"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="title"
-        android:textSize="15dp"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:layout_marginLeft="110dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/thumbnail"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintLeft_toRightOf="@+id/thumbnail"
+        app:layout_constraintTop_toTopOf="parent">
 
-    <TextView
-        android:id="@+id/contents"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:text="contents"
-        app:layout_constraintBottom_toBottomOf="@+id/thumbnail"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/thumbnail"
-        app:layout_constraintTop_toBottomOf="@+id/title" />
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="title"
+            android:textSize="19dp"
+            android:textStyle="bold" />
 
-    <TextView
-        android:id="@+id/authors"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="authors"
-        app:layout_constraintBottom_toBottomOf="@+id/thumbnail"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/thumbnail"
-        app:layout_constraintTop_toBottomOf="@+id/contents" />
+        <TextView
+            android:id="@+id/contents"
+            android:layout_width="match_parent"
+            android:layout_height="98dp"
+            android:layout_marginTop="10dp"
+            android:text="contents"
+            android:textSize="15dp" />
+
+        <TextView
+            android:id="@+id/authors"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="bottom"
+            android:text="authors"
+            android:textSize="10dp" />
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

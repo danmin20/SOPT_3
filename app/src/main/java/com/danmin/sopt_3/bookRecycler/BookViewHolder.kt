@@ -15,9 +15,13 @@ class BookViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     val authors = itemView.findViewById<TextView>(R.id.authors)
 
     fun bind(responseBookData: ResponseBookData) {
-        title.text = responseBookData.title
+        title.text = responseBookData.title.split("(")[0]
         Glide.with(itemView).load(responseBookData.thumbnail).into(thumbnail)
-        contents.text = responseBookData.contents
+        if (responseBookData.contents.length >= 80) {
+            contents.text = responseBookData.contents.substring(0, 80) + "..."
+        } else {
+            contents.text = responseBookData.contents
+        }
         authors.text = responseBookData.authors.toString()
     }
 }
